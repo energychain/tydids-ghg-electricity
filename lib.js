@@ -1,3 +1,27 @@
+const validateSignature = async function(certificate,hash,options) {
+    const tydids = require("tydids");
+    const wallet = tydids.wallet(options.privateKey);
+    let verbose = false;
+    if(typeof options.verbose !== 'undefined') verbose = options.verbose 
+    if(await wallet.tydids.verifyMessage(certificate.owner.payload,certificate.owner.signature) !== options.issuer) throw "Certificate invalid Signer - owner";
+    if(certificate.owner.payload.owner !== options.owner) throw "Invalid consensus - owner not wallet";
+    if(verbose) console.log("- Validated Consensus: Owner");
+
+    if(await wallet.tydids.verifyMessage(certificate.hash.payload,certificate.hash.signature) !== options.issuer) throw "Certificate invalid Signer - hash";
+    if(certificate.hash.payload !== hash) throw "Invalid hash - not as calcultated";
+    if(verbose) console.log("- Validated Consensus: Hash");
+
+    for (const [key, value] of Object.entries(certificate.presentations)) {
+        if(await wallet.tydids.verifyMessage(value.payload,value.signature) !== options.issuer) throw "Certificate invalid Signer - Presentation:"+key;
+        if(verbose) console.log("- Validated Consensus: Presentation "+key);
+    }
+    return true;
+}
+
+exports.validateSignature = async function(certificate,hash,options) {
+    return await validateSignature(certificate,hash,options);
+}
+
 exports.requestCertification = async function(zip,wh_consumption,options) {
 
     const tydids = require("tydids");
@@ -49,17 +73,11 @@ exports.requestCertification = async function(zip,wh_consumption,options) {
     const certificate = (await axios.post("https://api.corrently.io/v2.0/tydids/sign",certRequest)).data;
     if(verbose) console.log("- received certificate",certificate);
 
-    if(await wallet.tydids.verifyMessage(certificate.owner.payload,certificate.owner.signature) !== issuer) throw "Certificate invalid Signer - owner";
-    if(certificate.owner.payload.owner !== wallet.address) throw "Invalid consensus - owner not wallet";
-    if(verbose) console.log("- Validated Consensus: Owner");
-
-    if(await wallet.tydids.verifyMessage(certificate.hash.payload,certificate.hash.signature) !== issuer) throw "Certificate invalid Signer - hash";
-    if(certificate.hash.payload !== hash) throw "Invalid hash - not as calcultated";
-    if(verbose) console.log("- Validated Consensus: Hash");
-
-    for (const [key, value] of Object.entries(certificate.presentations)) {
-        if(await wallet.tydids.verifyMessage(value.payload,value.signature) !== issuer) throw "Certificate invalid Signer - Presentation:"+key;
-        if(verbose) console.log("- Validated Consensus: Presentation "+key);
-    }
+    validateSignature(certificate, hash,{
+        issuer:issuer,
+        privateKey:wallet.privateKey,
+        owner:wallet.address,
+        verbose:verbose
+    })
     return certificate;
 }

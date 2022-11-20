@@ -37,4 +37,24 @@ program.command('requestCertificate')
       console.log(certificate);
     }
   });
+
+  program.command('validateCertificate')
+  .description('Validates given Certificate JSON')
+  .argument('<certificate>', 'JSON File with certificate')
+  .argument('<hash>', 'Watt-hours electricity from public grid (mains)')
+  .argument('<issuer>', 'Required Issuer')
+  .argument('<owner>', 'Required Owner')
+  .action(async (certificate, hash, issuer,owner) => {
+    const fs = require("fs");
+
+    certificate = JSON.parse(fs.readFileSync(certificate));
+
+    let options = {
+      issuer:issuer,
+      owner:owner
+    }
+
+    const validation = await lib.validateSignature(certificate,hash,options);
+    console.log(validation);
+  });  
 program.parse();

@@ -1,6 +1,6 @@
 {
   "name": "tydids-ghg-electricity",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Provides GHG emissions for electricity usage (Germany only!) as digital certificate.",
   "main": "lib.js",
   "scripts": {
