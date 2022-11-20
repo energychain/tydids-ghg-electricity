@@ -44,7 +44,7 @@ Persentations are provided in attribute presentations of output
 | `base`  | Greenhouse Gas emissions regular per base unit |
 | `actual`  | Greenhouse Gas emissions at time of settlement |
 | `saving`  | Saved (base - actual) emissions |
-| `scope`  | Reporting scop (following ISO 14064 / ghg protocol) |
+| `scope`  | Reporting scope (following ISO 14064 / ghg protocol) |
 
 ## Maintainer / Imprint
 <addr>
