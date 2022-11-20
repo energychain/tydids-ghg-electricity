@@ -1,12 +1,22 @@
-exports.requestCertification = async function(zip,wh_consumption,verbose) {
+exports.requestCertification = async function(zip,wh_consumption,options) {
+
     const tydids = require("tydids");
     const axios = require("axios");
+    let verbose = false;
+
+    if((typeof options == 'undefined')||(options == null)) {
+        options = {};
+    }
+
+    if(typeof options.verbose !== 'undefined') verbose = options.verbose;
+
     if(verbose) console.log("tydids-ghg-electricity.requestCertification("+zip+","+wh_consumption+")");
     
     if( (""+zip).length !== 5 ) { throw new Exception("Invalid zipcode (zip)") }
     if( isNaN(wh_consumption) ) { throw new Exception("wh_consumption is not a number") }
 
-    const wallet = tydids.wallet(process.env.PRIVATE_KEY);
+    const wallet = tydids.wallet(options.privateKey);
+
     const intermediateRequest = {
         zip:zip,
         wh:wh_consumption * 1
