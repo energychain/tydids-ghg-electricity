@@ -48,13 +48,14 @@ Persentations are provided in attribute presentations of output
 
 ## Maintainer / Imprint
 <addr>
-[STROMDAO GmbH](https://stromdao.de/)  <br/>
+STROMDAO GmbH<br/>
 Gerhard Weiser Ring 29  <br/>
 69256 Mauer  <br/>
 Germany  <br/>
   <br/>
 +49 6226 968 009 0  <br/>
   <br/>
+https://stromdao.de/ <br/>
 kontakt@stromdao.com  <br/>
   <br/>
 Handelsregister: HRB 728691 (Amtsgericht Mannheim)
