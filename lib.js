@@ -49,7 +49,8 @@ exports.requestCertification = async function(zip,wh_consumption,options) {
 
     const intermediate = (await axios.post("https://api.corrently.io/v2.0/tydids/bucket/gsi",intermediateRequest)).data;
     if(verbose) console.log("- received intermediate:",{issuer:intermediate.payload._iss,intermediateId:intermediate.intermediate,hash:intermediate.hash});
-
+    if(verbose) console.log(intermediate);
+    
     const issuer = intermediate.payload._iss;
 
     if(intermediate.payload.consumption.actual !== wh_consumption) throw "Intermediate has different consumption";

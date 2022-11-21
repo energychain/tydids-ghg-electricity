@@ -27,7 +27,7 @@ program.command('requestCertificate')
     
     if(typeof command.output !== 'undefined') {
         const fs = require("fs");
-        const basefile = command.output + "/"+certificate.hash.payload;
+        const basefile = command.output + "/"+certificate.did.payload;
 
         fs.writeFileSync(basefile+".json",JSON.stringify(certificate));
         for (const [key, value] of Object.entries(certificate.presentations)) {
