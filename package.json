@@ -1,13 +1,13 @@
 {
   "name": "tydids-ghg-electricity",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Provides GHG emissions for electricity usage (Germany only!) as digital certificate.",
   "main": "lib.js",
   "scripts": {
     "test": "mocha -w"
   },
-  "bin":{
-      "tydids-ghg-certificate":"./cli-ghg-certificate.js"
+  "bin": {
+    "tydids-ghg-certificate": "./cli-ghg-certificate.js"
   },
   "repository": {
     "type": "git",
