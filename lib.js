@@ -432,7 +432,7 @@ const validateNFT = async function(certificate,options) {
     const ethers = require("ethers");
     const provider = new ethers.providers.JsonRpcProvider("https://rpc.tydids.com/");
     const wallet = new ethers.Wallet(options.privateKey,provider);
-    const instance = new ethers.Contract("0x60c1c9B26D655531294b84642939E9625E9B8fB4", ABI, wallet);
+    const instance = new ethers.Contract("0x984733860c7EdEb2c8072BF897A6633a8B53F43A", ABI, wallet);
     const ownerId = await instance.ownerOf(certificate.nft.payload.tokenId);
     const tokenURI = await instance.tokenURI(certificate.nft.payload.tokenId);
     if(ownerId !== wallet.address) throw "NFT Owner is not this ID";
